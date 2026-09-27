@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign in | Workfield</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body class="auth-page"><main class="auth-wrap">
+    <a class="wordmark auth-brand" th:href="@{/login}"><span class="brand-icon">J</span><span>work<span class="wordmark-light">field</span></span></a>
+    <section class="auth-panel"><p class="eyebrow">YOUR NEXT CHAPTER</p><h1>Good to see you.</h1><p class="subtle">Sign in to find your next role or manage your hiring.</p>
+        <div class="flash error" th:if="${param.error}">Email or password was not recognized.</div><div class="flash success" th:if="${param.registered}">Account created. Sign in to continue.</div><div class="flash success" th:if="${param.logout}">You have been signed out.</div>
+        <form class="form-stack" th:action="@{/login}" method="post"><label for="username">Email address</label><input id="username" name="username" type="email" autocomplete="username" required autofocus><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required><button class="button dark full" type="submit">Sign in <span>&#8594;</span></button></form>
+        <p class="auth-switch">New to Workfield? <a th:href="@{/register}">Create an account</a></p>
+    </section><p class="auth-caption">A practical place to bring good work and good people together.</p>
+</main></body></html>

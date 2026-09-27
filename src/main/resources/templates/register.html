@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Create account | Workfield</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body class="auth-page"><main class="auth-wrap">
+    <a class="wordmark auth-brand" th:href="@{/login}"><span class="brand-icon">J</span><span>work<span class="wordmark-light">field</span></span></a>
+    <section class="auth-panel"><p class="eyebrow">GET STARTED</p><h1>Make your move.</h1><p class="subtle">Create a candidate or recruiter account.</p>
+        <div class="flash error" th:if="${registrationError}" th:text="${registrationError}"></div>
+        <form class="form-stack" th:action="@{/register}" th:object="${registrationForm}" method="post">
+            <label for="displayName">Your name</label><input id="displayName" th:field="*{displayName}" maxlength="100" autocomplete="name" required><small class="field-error" th:errors="*{displayName}"></small>
+            <label for="email">Email address</label><input id="email" th:field="*{email}" type="email" autocomplete="email" required><small class="field-error" th:errors="*{email}"></small>
+            <label for="role">I am joining as</label><select id="role" th:field="*{role}" required><option value="">Choose account type</option><option value="CANDIDATE">Candidate</option><option value="RECRUITER">Recruiter</option></select><small class="field-error" th:errors="*{role}"></small>
+            <label for="password">Password</label><input id="password" th:field="*{password}" type="password" autocomplete="new-password" required><small class="hint">At least 12 characters.</small><small class="field-error" th:errors="*{password}"></small>
+            <label for="confirmPassword">Confirm password</label><input id="confirmPassword" th:field="*{confirmPassword}" type="password" autocomplete="new-password" required><small class="field-error" th:errors="*{confirmPassword}"></small>
+            <button class="button dark full" type="submit">Create account <span>&#8594;</span></button>
+        </form><p class="auth-switch">Already have an account? <a th:href="@{/login}">Sign in</a></p>
+    </section><p class="auth-caption">Admin accounts are provisioned separately.</p>
+</main></body></html>

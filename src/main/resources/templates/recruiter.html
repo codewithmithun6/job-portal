@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Recruiter desk | Workfield</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body><header th:replace="~{fragments/nav :: navigation}"></header><main class="layout page-content">
+    <section class="page-heading"><div><p class="eyebrow">HIRING WORKSPACE / RECRUITER</p><h1>Build your team.<br><em>Start with a role.</em></h1></div><span class="desk-mark">RECRUITER DESK</span></section>
+    <div class="flash success" th:if="${notice}" th:text="${notice}"></div><div class="flash error" th:if="${error}" th:text="${error}"></div>
+    <div class="recruiter-grid"><section class="managed-jobs"><div class="results-header"><div><span class="section-no">R</span><h2>Your openings</h2></div><span class="muted-count" th:text="${jobs.size()}">0</span></div>
+        <article class="managed-row" th:each="job : ${jobs}"><div class="managed-info"><div class="job-titleline"><h3 th:text="${job.title}">Role title</h3><span class="review-status" th:classappend="${job.status.name().toLowerCase()}" th:text="${job.status.name()}">OPEN</span></div><p><span th:text="${job.location}">Location</span><span class="dot">&#183;</span><span th:text="${job.applicationCount}">0</span> applications</p></div><form th:if="${job.status.name() == 'OPEN'}" th:action="@{/recruiter/jobs/{id}/close(id=${job.id})}" method="post"><button class="small-action" type="submit">Close role</button></form></article>
+        <p class="no-managed" th:if="${jobs.isEmpty()}">Your published openings will appear here.</p>
+    </section>
+    <aside class="post-panel"><p class="eyebrow">NEW OPENING</p><h2>Post a role</h2><form class="form-stack" th:action="@{/recruiter/jobs}" th:object="${jobForm}" method="post">
+        <label for="title">Role title</label><input id="title" th:field="*{title}" maxlength="140" placeholder="e.g. Product designer" required><small class="field-error" th:errors="*{title}"></small>
+        <label for="company">Company</label><input id="company" th:field="*{company}" maxlength="120" required><small class="field-error" th:errors="*{company}"></small>
+        <label for="location">Location</label><input id="location" th:field="*{location}" maxlength="120" placeholder="City or remote" required><small class="field-error" th:errors="*{location}"></small>
+        <label for="employmentType">Work type</label><select id="employmentType" th:field="*{employmentType}" required><option value="">Choose type</option><option th:each="type : ${employmentTypes}" th:value="${type.name()}" th:text="${#strings.replace(type.name(), '_', ' ')}">Full time</option></select><small class="field-error" th:errors="*{employmentType}"></small>
+        <label for="salaryRange">Salary range <span class="optional">OPTIONAL</span></label><input id="salaryRange" th:field="*{salaryRange}" maxlength="120" placeholder="e.g. $75,000 - $90,000"><small class="field-error" th:errors="*{salaryRange}"></small>
+        <label for="description">Role description</label><textarea id="description" th:field="*{description}" rows="6" maxlength="10000" placeholder="Responsibilities, experience, and what makes this role interesting" required></textarea><small class="field-error" th:errors="*{description}"></small>
+        <button class="button dark full" type="submit">Publish opening <span>+</span></button>
+    </form></aside></div>
+</main></body></html>

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Application review | Workfield</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body><header th:replace="~{fragments/nav :: navigation}"></header><main class="layout page-content">
+    <section class="page-heading"><div><p class="eyebrow">ADMINISTRATION / VERIFICATION</p><h1>Review with care.<br><em>Keep the process clear.</em></h1></div><span class="desk-mark admin-mark">ADMIN REVIEW</span></section>
+    <div class="flash success" th:if="${notice}" th:text="${notice}"></div><div class="flash error" th:if="${error}" th:text="${error}"></div>
+    <section class="results-header"><div><span class="section-no">A</span><h2>Application queue</h2></div><span class="muted-count" th:text="|${applications.size()} total|">0 total</span></section>
+    <section class="review-list" th:if="${!applications.isEmpty()}"><article class="review-card" th:each="applicationRecord : ${applications}"><div class="review-top"><div><p class="eyebrow" th:text="${applicationRecord.company}">Company</p><h3 th:text="${applicationRecord.jobTitle}">Job title</h3></div><span class="review-status" th:classappend="${applicationRecord.status.name().toLowerCase()}" th:text="${applicationRecord.status.name()}">PENDING</span></div>
+        <div class="candidate-line"><strong th:text="${applicationRecord.candidateName}">Candidate name</strong><a th:href="|mailto:${applicationRecord.candidateEmail}|" th:text="${applicationRecord.candidateEmail}">candidate@email</a><time th:text="${#temporals.format(applicationRecord.appliedAt, 'MMM d, yyyy · h:mm a')}">Date</time></div>
+        <div class="cover-letter"><span>CANDIDATE NOTE</span><p th:text="${applicationRecord.coverLetter}">Cover letter</p></div>
+        <div class="review-actions" th:if="${applicationRecord.status.name() == 'PENDING'}"><form th:action="@{/admin/applications/{id}/review(id=${applicationRecord.id})}" method="post"><input type="hidden" name="decision" value="VERIFIED"><button class="button approve" type="submit">Verify application <span>&#10003;</span></button></form><form th:action="@{/admin/applications/{id}/review(id=${applicationRecord.id})}" method="post"><input type="hidden" name="decision" value="REJECTED"><button class="button reject" type="submit">Reject</button></form></div>
+    </article></section>
+    <section class="empty-jobs" th:if="${applications.isEmpty()}"><span class="empty-symbol">A</span><h2>The review queue is clear.</h2><p>New candidate applications will appear here for verification.</p></section>
+</main></body></html>

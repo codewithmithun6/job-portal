@@ -1,0 +1,10 @@
+<nav class="nav" th:fragment="navigation">
+    <a class="wordmark" th:href="@{/jobs}"><span class="brand-icon">J</span><span>work<span class="wordmark-light">field</span></span></a>
+    <div class="nav-links">
+        <a th:href="@{/jobs}">Find work</a>
+        <a sec:authorize="hasRole('CANDIDATE')" th:href="@{/jobs/my-applications}">My applications</a>
+        <a sec:authorize="hasRole('RECRUITER')" th:href="@{/recruiter}">Recruiter desk</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/applications}">Review queue</a>
+    </div>
+    <div class="nav-user"><span sec:authentication="name"></span><form th:action="@{/logout}" method="post"><button type="submit">Sign out</button></form></div>
+</nav>

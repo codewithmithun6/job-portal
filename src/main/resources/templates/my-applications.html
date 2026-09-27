@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My applications | Workfield</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body><header th:replace="~{fragments/nav :: navigation}"></header><main class="layout page-content">
+    <section class="page-heading"><div><p class="eyebrow">CANDIDATE SPACE / 02</p><h1>Your next steps,<br><em>all in one place.</em></h1></div><a class="button outline" th:href="@{/jobs}">Explore roles <span>&#8599;</span></a></section>
+    <section class="results-header"><div><span class="section-no">B</span><h2>My applications</h2></div><span class="muted-count" th:text="|${applications.size()} submitted|">0 submitted</span></section>
+    <section class="application-list" th:if="${!applications.isEmpty()}"><article class="application-row" th:each="applicationRecord : ${applications}"><div class="application-main"><h3 th:text="${applicationRecord.jobTitle}">Role title</h3><p th:text="${applicationRecord.company}">Company</p><time th:text="${#temporals.format(applicationRecord.appliedAt, 'MMM d, yyyy')}">Date</time></div><span class="review-status" th:classappend="${applicationRecord.status.name().toLowerCase()}" th:text="${applicationRecord.status.name()}">PENDING</span></article></section>
+    <section class="empty-jobs" th:if="${applications.isEmpty()}"><span class="empty-symbol">01</span><h2>No applications yet.</h2><p>Save a role that catches your eye and send in your first application.</p><a th:href="@{/jobs}">Browse open roles &#8594;</a></section>
+</main></body></html>
